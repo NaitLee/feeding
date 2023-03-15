@@ -134,6 +134,8 @@
 
         const moves = {
             on: false,
+            start_x: 0,
+            start_y: 0,
             prev_x: 0,
             prev_y: 0,
             x: 0,
@@ -160,8 +162,8 @@
                 const touch = event.touches ? event.touches[0] : event;
                 //move_stats.x = 0;
                 //move_stats.y = 0;
-                moves.prev_x = touch.screenX;
-                moves.prev_y = touch.screenY;
+                moves.start_x = moves.prev_x = touch.pageX;
+                moves.start_y = moves.prev_y = touch.pageY;
                 moves.on = true;
             };
             const move_go = function(event) {
@@ -171,10 +173,10 @@
                 const e = food_e;
                 let x = moves.x;
                 let y = moves.y;
-                moves.x += touch.screenX - moves.prev_x;
-                moves.y += touch.screenY - moves.prev_y;
-                moves.prev_x = touch.screenX;
-                moves.prev_y = touch.screenY;
+                moves.x += touch.pageX - moves.prev_x;
+                moves.y += touch.pageY - moves.prev_y;
+                moves.prev_x = touch.pageX;
+                moves.prev_y = touch.pageY;
                 e.style.top = food.y + moves.y - food_offset + 'px';
                 e.style.left = food.x + moves.x - food_offset + 'px';
             };
@@ -182,8 +184,8 @@
                 event.preventDefault();
                 food.x += moves.x;
                 food.y += moves.y;
-                moves.prev_x = 0;
-                moves.prev_y = 0;
+                // moves.prev_x = 0;
+                // moves.prev_y = 0;
                 moves.x = 0;
                 moves.y = 0;
                 moves.on = false;
@@ -254,19 +256,22 @@
                         smooth_on = false;
                     }
                     eyes[0].style.transform = `translate(${
-                        Math.max(-1.2, Math.min(1.6, ((x + moves.x) - (svg_offset.x + eye_0.x + eye_0.width / 2)) * 0.004))
+                        Math.max(-1.0, Math.min(1.6, ((x + moves.x) - (svg_offset.x + eye_0.x + eye_0.width / 2)) * 0.004))
                     }px, ${
                         Math.max(-1.2, Math.min(1.2, ((y + moves.y) - (svg_offset.y + eye_0.y + eye_0.height / 2)) * 0.002))
                     }px)`;
                     eyes[1].style.transform = `translate(${
-                        Math.max(-0.4, Math.min(2.2, ((x + moves.x) - (svg_offset.x + eye_1.x + eye_1.width / 2)) * 0.004))
+                        Math.max(-0.4, Math.min(2.0, ((x + moves.x) - (svg_offset.x + eye_1.x + eye_1.width / 2)) * 0.004))
                     }px, ${
                         Math.max(-1.2, Math.min(1.2, ((y + moves.y) - (svg_offset.y + eye_1.y + eye_1.height / 2)) * 0.002))
                     }px)`;
                 }
                 function look_pointer(event) {
                     const touch = event.touches ? event.touches[0] : event;
-                    look_at(touch.pageX, touch.pageY, true);
+                    if (moves.start_x !== moves.prev_x || moves.start_y !== moves.prev_y) {
+                        return;
+                    }
+                    look_at(moves.start_x, moves.start_y, true);
                     setTimeout(() => look_at(food.x + moves.x, food.y + moves.y, true), 500 + 1000 * Math.random());
                 }
 
@@ -327,6 +332,7 @@
                         svgquery('#eyes').style.display = 'none';
                         svgquery('#winks-down').style.display = 'none';
                         svgquery('#winks').style.display = 'inline';
+                        eyes.forEach(e => e.style.transform = '');
                         setTimeout(function() {
                             mouths.tongle.style.display = 'none';
                             svgquery('#eyes').style.display = 'inline';
@@ -337,12 +343,12 @@
                         }, 2000);
                     }, 4 * 3 * 200);
                 };
-                overlay_e.addEventListener('mousedown', look_pointer);
                 overlay_e.addEventListener('mousemove', food_detect);
                 overlay_e.addEventListener('mouseup', food_eat);
-                overlay_e.addEventListener('touchstart', look_pointer);
+                overlay_e.addEventListener('mouseup', look_pointer);
                 overlay_e.addEventListener('touchmove', food_detect);
                 overlay_e.addEventListener('touchend', food_eat);
+                overlay_e.addEventListener('touchend', look_pointer);
 
                 const showstate = () => state_e.innerText = JSON.stringify(state, void 0, 4);
                 const addbutton = function(id, onclick, bold) {
