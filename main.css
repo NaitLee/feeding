@@ -1,0 +1,101 @@
+
+:root {
+    --fore: #111;
+    --back: #f8f8f8;
+}
+
+body {
+    font-family: 'Fantasque Sans Mono', 'Noto Sans', 'Segoe UI', monospace;
+    color: var(--fore);
+    background-color: var(--back);
+    margin: 1em auto;
+    width: 60em;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+a:any-link {
+    color: #5555ff;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+pre {
+    font-family: inherit;
+}
+
+button {
+    margin: 4px 8px;
+    padding: 4px 8px;
+    border: 1px solid var(--fore);
+    border-radius: 0;
+    min-width: 6em;
+    background-color: unset;
+    font: inherit;
+    color: inherit;
+    display: inline-block;
+    cursor: pointer;
+}
+
+button:hover {
+    text-decoration: underline;
+}
+
+iframe {
+    /* border: 1px solid var(--fore); */
+    border: none;
+    width: 512px;
+    /* max-width: calc(100% - 2px); */
+    height: 854px;
+}
+
+aside {
+    float: inline-end;
+    margin: 1em 2em;
+    max-width: 22em;
+    background-color: var(--back);
+}
+
+#overlay {
+    /* position: absolute; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#food {
+    position: absolute;
+    /* transform: translate(-50%, -50%); */
+    font-size: 48px;
+    display: block;
+    pointer: default;
+    user-select: none;
+    opacity: 1;
+    transition: transform 0.2s 0s ease-out,
+                opacity 0.3s 0s ease-out;
+}
+#food.disappeared {
+    transform: scale(0) rotate(1turn);
+    opacity: 0;
+}
+footer {
+    font-size: small;
+    margin: 6em auto;
+    text-align: center;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --fore: #ddd;
+        --back: #222;
+    }
+}
+
+@font-face {
+    font-family: 'Fantasque Sans Mono';
+    src: url('/assets/fantasquesansmono-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
