@@ -6,7 +6,7 @@
    inkscape:export-xdpi="600"
    inkscape:export-filename="nait-b.png"
    sodipodi:docname="nait-fun.svg"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    id="svg5"
    version="1.1"
    viewBox="0 0 135.40002 225.843"
@@ -30,15 +30,15 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.79927404"
-     inkscape:cx="189.547"
-     inkscape:cy="490.44505"
+     inkscape:zoom="2.2606884"
+     inkscape:cx="249.26036"
+     inkscape:cy="376.65518"
      inkscape:window-width="1920"
      inkscape:window-height="1039"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="nait"
+     inkscape:current-layer="head"
      showguides="true" />
   <defs
      id="defs2">
@@ -157,14 +157,14 @@
              style="fill:#ffe2d4;stroke:#886353"
              sodipodi:nodetypes="cccczzc" />
           <path
-             d="m 38.759752,102.78313 c -7.462383,3.04675 -13.968459,-5.432906 -10.776625,-9.085761 0.93687,-1.07219 3.920743,-2.780495 5.220743,-0.06049 0.911611,1.940094 3.592413,6.528291 5.555882,9.146251 z"
-             style="fill:#ffe2d4;stroke:#886353;stroke-width:0.99951;stroke-dasharray:none"
+             d="m 39.390174,102.1203 c -8.919354,3.70669 -14.409825,-4.138029 -11.988346,-7.907418 1.360351,-2.117574 5.734145,-2.996784 7.150703,-0.453906"
+             style="display:inline;fill:#ffe2d4;fill-rule:nonzero;stroke:#886353;stroke-width:0.99951;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
              id="ear-a1"
-             sodipodi:nodetypes="cscc"
+             sodipodi:nodetypes="csc"
              inkscape:label="ear-a1" />
           <path
-             d="m 31.102632,94.975234 c -0.186308,0.453182 -0.348035,1.050163 -0.103251,1.678018 M 29.70062,96.92836 c 0.08,2 3.537616,4.31564 6.131115,4.13514"
-             style="fill:none;stroke:#886353;stroke-width:0.99951;stroke-dasharray:none"
+             d="m 34.562834,97.655716 c -0.534782,-1.799559 -3.061138,-3.705962 -5.536498,-3.188513 m 4.218576,1.630555 c -2.885369,0.110072 -1.706032,4.525772 1.697445,4.230582"
+             style="display:inline;fill:none;fill-rule:nonzero;stroke:#886353;stroke-width:0.99951;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
              id="ear-b1"
              inkscape:label="ear-b1"
              sodipodi:nodetypes="cccc" />

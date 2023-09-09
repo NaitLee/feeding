@@ -1,7 +1,4 @@
 {
     "host": "0.0.0.0",
-    "port": 8291,
-    "countapi": "",
-    "namespace": "",
-    "key": ""
+    "port": 8291
 }

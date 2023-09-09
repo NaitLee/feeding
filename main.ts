@@ -1,36 +1,36 @@
+/// <reference lib="deno.unstable" />
 
-import { serve } from "https://deno.land/std@0.192.0/http/server.ts";
-import { serveDir } from "https://deno.land/std@0.192.0/http/file_server.ts";
 import { Status, STATUS_TEXT } from "https://deno.land/std@0.192.0/http/http_status.ts";
 
+const KV_KEY_FEEDS = ['feeds'];
+
 const config = JSON.parse(await Deno.readTextFile('config.json'));
-if (Deno.env.has('CONFIG')) {
-    console.log('Starting with configuration from environment');
-    [config.countapi, config.namespace, config.key] = Deno.env.get('CONFIG')!.split(';');
+
+const api_to_mode = {
+    '~getfeeds': 'get',
+    '~feed': 'hit'
 }
 
-let last_known_value = 0;
-
-const api_to_mode: Record<string, string> = {
-    '/~getfeeds': 'get',
-    '/~feed': 'hit'
-}
-
-serve(async function (request: Request) {
+Deno.serve({
+    hostname: config.host,
+    port: config.port
+}, async function (request: Request) {
     const url = new URL(request.url);
     if (!['HEAD', 'GET', 'POST'].includes(request.method))
         return new Response(null, {
             status: Status.MethodNotAllowed,
             statusText: STATUS_TEXT[Status.MethodNotAllowed]
         });
-    const pathname = url.pathname;
-    if (/\.(ts|jsx|tsx|tsm|exe|msi|chm|bat|cmd|php|jsp|aspx?)$/.test(pathname) || pathname.includes('/..')) {
+    let path = url.pathname.slice(1);
+    if (path === '')
+        path = 'index.html';
+    if (/\.(ts|jsx|tsx|tsm|exe|msi|chm|bat|cmd|php|jsp|aspx?)$/.test(path) || path.includes('/..')) {
         return new Response(null, {
             status: Status.Teapot,
             statusText: STATUS_TEXT[Status.Teapot]
         });
     }
-    if (pathname === '/nait-fun.html')
+    if (path === 'nait-fun.html')
         return new Response(null, {
             status: Status.MovedPermanently,
             statusText: STATUS_TEXT[Status.MovedPermanently],
@@ -38,26 +38,34 @@ serve(async function (request: Request) {
                 'Location': '/'
             }
         });
-    if (pathname.startsWith('/~')) {
-        const mode = api_to_mode[pathname];
+    if (path.startsWith('~')) {
+        const mode = api_to_mode[path as keyof typeof api_to_mode];
         if (mode === undefined)
             return new Response(STATUS_TEXT[Status.NotImplemented], {
                 status: Status.NotImplemented
             });
-        const response = config.countapi
-            ? await fetch(config.countapi + mode + '/' + config.namespace + '/' + config.key)
-            : null;
-        if (response !== null && response.ok) {
-            last_known_value = (await response.json()).value;
-        } else {
-            if (mode === 'hit') ++last_known_value;
+        const kv = await Deno.openKv();
+        const entry_feeds = await kv.get<number>(KV_KEY_FEEDS);
+        let feeds;
+        if (entry_feeds.value === null)
+            await kv.set(KV_KEY_FEEDS, feeds = 0);
+        else
+            feeds = entry_feeds.value;
+        switch (mode) {
+            case 'hit':
+                await kv.set(KV_KEY_FEEDS, feeds += 1);
+                return new Response(null, {
+                    status: Status.NoContent
+                });
+            case 'get':
+                return new Response(JSON.stringify({
+                    'value': feeds
+                }), {
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    }
+                });
         }
-        return new Response(JSON.stringify({
-            'value': last_known_value
-        }));
     }
-    return serveDir(request);
-}, {
-    hostname: config.host,
-    port: config.port
+    return fetch(new URL(path, import.meta.url));
 });
