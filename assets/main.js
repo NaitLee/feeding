@@ -11,7 +11,7 @@ const state = {
     look: true,
     visor: true,
     glasses: true,
-    nose: true,
+    hairtip: true,
     fun: false
 };
 const food = {
@@ -222,14 +222,10 @@ document.addEventListener('DOMContentLoaded', function () {
         overlay_e.addEventListener('touchend', look_pointer);
 
         const showstate = () => state_e.innerText = JSON.stringify(state, void 0, 4);
-        const addbutton = function(id, onclick, bold) {
+        const addbutton = function(id, onclick, strong) {
             const button = document.createElement('button');
-            if (bold) {
-                const b = document.createElement('b');
-                b.innerText = id;
-                button.appendChild(b);
-            } else
-                button.innerText = id;
+            if (strong) button.classList.add('strong')
+            button.innerText = id;
             button.addEventListener('click', onclick);
             button.addEventListener('click', showstate);
             buttons_e.appendChild(button);
@@ -249,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
             svgquery('#nait').style.transformOrigin = '50% 0';
             svgquery('#nait').style.transform = `scaleX(${state.flip})`;
         });
-        for (const item of ['visor', 'glasses', 'nose'])
+        for (const item of ['visor', 'glasses', 'hairtip'])
             addbutton(item, function () {
                 state[item] = !state[item];
                 svgquery('#' + item).style.display = display(state[item]);
@@ -275,11 +271,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         */
         addbutton('feed', function () {
-            docquery('aside').remove();
-            document.body.style.textAlign = 'center';
-            document.body.style.overflow = 'hidden';
-            scrollTo(0, 0);
-            initFun();
+            state.fun = true;
+            setTimeout(function() {
+                docquery('aside').remove();
+                document.body.style.textAlign = 'center';
+                document.body.style.overflow = 'hidden';
+                scrollTo(0, 0);
+                initFun();
+            }, 1000);
         }, true);
         showstate();
     });

@@ -26,6 +26,7 @@ pre {
 }
 
 button {
+    display: inline-block;
     margin: 4px 8px;
     padding: 4px 8px;
     border: 1px solid var(--fore);
@@ -36,6 +37,10 @@ button {
     color: inherit;
     display: inline-block;
     cursor: pointer;
+}
+button.strong {
+    font-weight: 600;
+    width: 20em;
 }
 
 button:hover {
