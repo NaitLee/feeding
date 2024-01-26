@@ -90,12 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
         // iframe.contentWindow.scroll(iframe.contentWindow.scrollMaxX / 2, 0);
         const svgdoc = iframe.contentDocument;
         const svgquery = mkquery(svgdoc);
-        if (window.innerWidth < 512) {
-            iframe.style.width = window.innerWidth + 'px';
-            iframe.style.height = Math.min(512, window.innerHeight / 2) + 'px';
-            svgquery('svg').style.transformOrigin = '0 0';
-            svgquery('svg').style.transform = `scale(${window.innerWidth / 512})`;
-        }
         const mouths = {
             mouth: svgquery('#mouth'),
             tongle: svgquery('#mouth-tongle'),
@@ -107,24 +101,10 @@ document.addEventListener('DOMContentLoaded', function () {
         let chew_interval = 0;
         let chew_index = 0;
 
-        const svganim = `
-@keyframes fronthair { 0% { transform: skewX(-3deg); } 50% { transform: skewX(3deg); } 100% { transform: skewX(-3deg); } }
-@keyframes ahole { 0% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } 100% { transform: rotate(-5deg); } }
-@keyframes head { 0% { transform: rotate(-0.8deg); } 50% { transform: rotate(0.8deg); } 100% { transform: rotate(-0.8deg); } }
-#fronthair { transform-origin: 50% 24%; animation: fronthair 4s 0s ease-in-out infinite; }
-#ahole { transform-origin: 45% 20%; animation: ahole 4s 0s ease-in-out infinite; }
-/*#head { transform-origin: 50% 50%; animation: head 16s 0s ease-in infinite; }*/
-.smooth { transition: all 0.16s 0s ease-out; }
-`;
-        const svgstyle = svgdoc.createElementNS('http://www.w3.org/2000/svg', 'style');
-        svgstyle.innerHTML = svganim;
-        svgquery('svg').appendChild(svgstyle);
-
         function initFun() {
             const margin = Math.max(128, window.innerWidth * 0.2, window.innerHeight * 0.2);
             const e = food_e;
             overlay_e.style.display = 'block';
-            docquery('footer').style.display = 'none';
             e.innerText = foods[Math.random() * foods.length | 0];
             food.x = 150 + (Math.random() * (window.innerWidth - margin) | 0);
             food.y = 150 + (Math.random() * (window.innerHeight - margin) | 0);
@@ -163,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
             look_at(moves.start_x, moves.start_y, true);
-            setTimeout(() => look_at(food.x + moves.x, food.y + moves.y, true), 500 + 1000 * Math.random());
+            setTimeout(() => look_at(food.x + moves.x, food.y + moves.y, true), 800 + 800 * Math.random());
         }
 
         const food_detect = function(event) {

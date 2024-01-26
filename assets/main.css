@@ -9,7 +9,7 @@ body {
     color: var(--fore);
     background-color: var(--back);
     margin: 1em auto;
-    width: 60em;
+    width: 29.7cm;
     max-width: 100%;
     overflow-x: hidden;
 }
@@ -42,15 +42,26 @@ button:hover {
     text-decoration: underline;
 }
 
+main {
+    margin: 0 1em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
 iframe {
-    /* border: 1px solid var(--fore); */
+    flex-grow: 1;
+    display: block;
     border: none;
     width: 512px;
-    /* max-width: calc(100% - 2px); */
+    max-width: calc(100% - 2px);
     height: 854px;
+    max-height: 166.8vw;
+    margin: auto;
 }
 
 aside {
+    flex-grow: 0;
     float: inline-end;
     margin: 1em 2em;
     max-width: 22em;

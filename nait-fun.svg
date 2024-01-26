@@ -7,7 +7,8 @@
    inkscape:export-filename="nait-b.png"
    sodipodi:docname="nait-fun.svg"
    inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
-   id="svg5"
+   id="canvas"
+   style="overflow: hidden; width: 100%; max-height: 166.8vw;"
    version="1.1"
    viewBox="0 0 135.40002 225.843"
    height="854"
@@ -105,6 +106,15 @@
        gradientTransform="matrix(0.82718769,-6.7223864e-4,-0.04966879,2.0031867,-12.108299,-89.487698)"
        gradientUnits="userSpaceOnUse" />
   </defs>
+  <style>
+      @keyframes fronthair { 0% { transform: skewX(-3deg); } 50% { transform: skewX(3deg); } 100% { transform: skewX(-3deg); } }
+      @keyframes ahole { 0% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } 100% { transform: rotate(-5deg); } }
+      @keyframes head { 0% { transform: rotate(-0.8deg); } 50% { transform: rotate(0.8deg); } 100% { transform: rotate(-0.8deg); } }
+      #fronthair { transform-origin: 50% 24%; animation: fronthair 4s 0s ease-in-out infinite; }
+      #ahole { transform-origin: 45% 20%; animation: ahole 4s 0s ease-in-out infinite; }
+      /*#head { transform-origin: 50% 50%; animation: head 16s 0s ease-in infinite; }*/
+      .smooth { transition: all 0.16s 0s ease-out; }
+  </style>
   <g
      inkscape:label="nait"
      inkscape:groupmode="layer"
