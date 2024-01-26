@@ -284,6 +284,14 @@ function start() {
     showstate();
 }
 
-document.addEventListener('DOMContentLoaded', start);
+// dirty work around for iframe.onload race condition
+function try_to_start() {
+    if (document.querySelector('iframe').contentDocument.querySelector('#nait') === null)
+        setTimeout(try_to_start, 500);
+    else
+        start();
+}
+
+document.addEventListener('DOMContentLoaded', try_to_start);
 
 // @license-end

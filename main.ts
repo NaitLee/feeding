@@ -54,9 +54,7 @@ Deno.serve({
         switch (mode) {
             case 'hit':
                 await kv.set(KV_KEY_FEEDS, feeds += 1);
-                return new Response(null, {
-                    status: Status.NoContent
-                });
+                return new Response(null, { status: 206 });
             case 'get':
                 return new Response(JSON.stringify({ 'value': feeds }), {
                     headers: { 'Content-Type': Mime['json'] }
