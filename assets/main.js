@@ -3,6 +3,9 @@
 
 const foods = '🍇 🍈 🍉 🍊 🍋 🍌 🍍 🍎 🍏 🍐 🍑 🍒 🍓 🍞 🍦 🍧 🍨 🍩 🍪 🍫 🍬 🍭'.split(' ');
 
+const feedapi = "https://feed.unseen-site.fun";
+//const feedapi = "";
+
 function mkquery(doc) { return (selector) => doc.querySelector(selector); }
 
 const state = {
@@ -44,9 +47,10 @@ function start() {
 
     // let feeds = parseInt(localStorage.getItem('feeds') || '0');
     // docquery('#feeds').innerText = feeds;
-    fetch('/~getfeeds').then(r => r.json())
+    if (feedapi) fetch(feedapi+'/~getfeeds').then(r => r.json())
         .catch(_ => ({ value: parseInt(localStorage.getItem('feeds') || '0') }))
         .then(j => docquery('#feeds').innerText = (feeds = j.value));
+    else docquery('#feeds').innerText = "0";
 
     const move_start = function(event) {
         event.preventDefault();
@@ -192,7 +196,7 @@ function start() {
             chew_index = (chew_index + 1) % mouths.chew.length;
         }, 200);
         // let feeds = parseInt(localStorage.getItem('feeds') || '0');
-        fetch('/~feed');
+        if (feedapi) fetch(feedapi+'/~feed');
         docquery('#feeds').innerText = ++feeds;
         localStorage.setItem('feeds', feeds);
         setTimeout(function() {

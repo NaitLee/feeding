@@ -18,7 +18,7 @@ function extname(path: string) {
     return segs[segs.length - 1];
 }
 
-const Mime = {
+const Mimetype = {
     'html': 'text/html;charset=utf-8',
     'svg': 'image/svg+xml;charset=utf-8',
     'css': 'text/css;charset=utf-8',
@@ -54,14 +54,14 @@ Deno.serve({
         switch (mode) {
             case 'hit':
                 await kv.set(KV_KEY_FEEDS, feeds += 1);
-                return new Response(null, { status: 206 });
+                return new Response(null, { status: 206, headers: { 'Access-Control-Allow-Origin': '*' } });
             case 'get':
                 return new Response(JSON.stringify({ 'value': feeds }), {
-                    headers: { 'Content-Type': Mime['json'] }
+                    headers: { 'Content-Type': Mimetype['json'], 'Access-Control-Allow-Origin': '*' }
                 });
         }
     }
     return fetch(new URL(path, import.meta.url)).then(r => r.body).then(stream => new Response(stream, {
-        headers: { 'Content-Type': Mime[extname(path)] || 'text/plain' }
+        headers: { 'Content-Type': Mimetype[extname(path)] || 'text/plain', 'Access-Control-Allow-Origin': '*' }
     })).catch(_ => new Response('not found', { status: 404 }));
 });
